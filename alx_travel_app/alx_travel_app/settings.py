@@ -27,7 +27,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Use variables
 DEBUG = env('DEBUG')
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
+CHAPA_SECRET_KEY = os.getenv("CHAPA_SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
