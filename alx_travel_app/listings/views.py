@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Payment
 from django.conf import settings
+from .tasks import send_booking_confirmation_email
 
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
@@ -25,6 +26,12 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(guest=self.request.user)
+
+    def perform_create(self, serializer):
+        booking = serializer.save(user=self.request.user)
+        email = booking.user.email
+        booking_info = f"Booking ID: {booking.id}\nProperty: {booking.property.name}"
+        send_booking_confirmation_email.delay(email, booking_info)
 
 CHAPA_SECRET_KEY = settings.CHAPA_SECRET_KEY
 CHAPA_BASE_URL = "https://api.chapa.co/v1/transaction"

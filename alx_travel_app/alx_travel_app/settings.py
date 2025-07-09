@@ -90,12 +90,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'alx_travel_app.wsgi.application'
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # set the celery result backend
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # set the celery timezone
 CELERY_TIMEZONE = 'UTC'
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
+DEFAULT_FROM_EMAIL = 'ALX Travel <your-email@gmail.com>'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
